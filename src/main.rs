@@ -4,6 +4,7 @@ use std::fs;
 // Steps in building a minigrep command line application
 // Accepting command line arguments
 // Reading a file
+// Error handling
 
 fn main() {
 
@@ -24,11 +25,17 @@ struct  Config{
 }
 
 impl Config{
-    fn new(args: &[String]) -> Config{
+    fn new(args: &[String]) -> Result<Config, &'static str>{
+
+        // Improve error message
+        if args.len() < 3{
+            return Err("nor enough arguments");
+        }
+
         let query = args[1].clone();
         let filename = args[2].clone();
 
-        Config{query, filename}
+        OK(Config{query, filename})
     }
 }
 

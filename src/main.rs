@@ -1,6 +1,6 @@
 use std::env;
-use std::fs;
 use std::process;
+use minigrep::{Config, run};
 
 // Steps in building a minigrep command line application
 // Accepting command line arguments
@@ -21,35 +21,15 @@ fn main() {
     println!("In file {}", config.filename);
 
 
-}
-//extract logic from main
-//return errors from the run fn
-fn run(config: Config) -> Retrun<(), Box<dyn Error>>{
-    let contents = fs::read_to_string(config.filename)?;
-    println!("with text\n{}", contents);
+    if let Err(e) = run(config){
+        println!("Application error {}", e);
 
-    Ok(())
-}
-
-struct  Config{
-    query: String,
-    filename: String,
-}
-
-impl Config{
-    fn new(args: &[String]) -> Result<Config, &'static str>{
-
-        // Improve error message
-        if args.len() < 3{
-            return Err("nor enough arguments");
-        }
-
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Ok(Config{query, filename})
+        process::exit(1);
     }
+
+
 }
+
 
 
 

@@ -22,10 +22,13 @@ fn main() {
 
 
 }
-
-fn run(config: Config){
-    let contents = fs::read_to_string(config.filename).expect("Something went wrong reading the file");
+//extract logic from main
+//return errors from the run fn
+fn run(config: Config) -> Retrun<(), Box<dyn Error>>{
+    let contents = fs::read_to_string(config.filename)?;
     println!("with text\n{}", contents);
+
+    Ok(())
 }
 
 struct  Config{

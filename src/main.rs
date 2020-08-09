@@ -4,11 +4,12 @@ use std::fs;
 // Steps in building a minigrep command line application
 // Accepting command line arguments
 // Reading a file
+
 fn main() {
 
     let args:Vec<String> = env::args().collect();
 
-    let config = argument_parser(&args);
+    let config = Config::new(&args);
 
     println!("Searching for {}", config.query);
     println!("In file {}", config.filename);
@@ -22,11 +23,15 @@ struct  Config{
     filename: String,
 }
 
-fn argument_parser(args: &[String]) -> Config{
-    let query = args[1].clone();
-    let filename = args[2].clone();
+impl Config{
+    fn new(args: &[String]) -> Config{
+        let query = args[1].clone();
+        let filename = args[2].clone();
 
-    Config{query, filename}
+        Config{query, filename}
+    }
 }
+
+
 
 
